@@ -1,0 +1,58 @@
+import processing.serial.*;
+import cc.arduino.*;
+
+int lf = 10; // Linefeed in ASCII
+int value;
+float numba = map(value, 12, 90, 10, 400);
+String myString = null;
+Serial myPort;
+
+void setup(){
+
+printArray(Serial.list());
+background (39, 48, 71);
+size(1275, 800);
+smooth(2);
+
+myPort = new Serial(this, "/dev/cu.usbmodem1421", 9600);
+myString = myPort.readStringUntil(lf);
+
+}
+
+void draw(){
+
+float numba = map(value, 12, 90, 10, 400);
+stroke(random(100), random(150), random(200));
+strokeWeight(2);
+noFill();
+
+drawCircle(width/2, height/2, numba);
+
+//branch(width/2, height, 180);
+
+while (myPort.available()>0){
+myString = myPort.readStringUntil(lf);
+
+if (myString != null) {
+myString = trim (myString);
+value = int (myString);
+println(numba);
+
+}
+
+}
+
+}
+
+void drawCircle(float x, float y, float numba){
+ellipse (x, y, numba, numba);
+if(numba>2){
+
+drawCircle(x + numba/1.5, y, numba/2);
+
+drawCircle(x - numba/1.5, y, numba/2);
+
+
+}
+
+}
