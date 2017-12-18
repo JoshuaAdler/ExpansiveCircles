@@ -1,0 +1,25 @@
+const int pwPin = 10;
+
+long pulse, inches, cm;
+
+int measure = 0;
+
+void setup() {
+
+Serial.begin(9600);
+
+}
+
+void loop() {
+
+pinMode(pwPin, INPUT);
+
+pulse = pulseIn(pwPin, HIGH);
+
+inches = pulse/147;
+
+cm = inches*2.54;
+
+Serial.println(cm); measure = measure + 1;
+
+}
